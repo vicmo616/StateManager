@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateManager", "StateManager\StateManager.csproj", "{42DC311B-B58F-4EFB-AC90-3BDFB66A3842}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateManager", "StateManager\StateManager.csproj", "{42DC311B-B58F-4EFB-AC90-3BDFB66A3842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateManagerModels", "StateManagerModels\StateManagerModels.csproj", "{1D41EAB3-4A16-44D4-8A7F-5A796F5C617A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateManagerModels", "StateManagerModels\StateManagerModels.csproj", "{1D41EAB3-4A16-44D4-8A7F-5A796F5C617A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbLibrary", "DbLibrary\DbLibrary.csproj", "{845BCC02-619D-4D06-B51A-EEAFCEF6025B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbLibrary", "DbLibrary\DbLibrary.csproj", "{845BCC02-619D-4D06-B51A-EEAFCEF6025B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateDataService", "StateDataService\StateDataService.csproj", "{8423278F-83BC-4AA9-BAD8-3AF8A5258BA9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StateDataService", "StateDataService\StateDataService.csproj", "{8423278F-83BC-4AA9-BAD8-3AF8A5258BA9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatesServiceIntegrationTests", "StatesServiceIntegrationTests\StatesServiceIntegrationTests.csproj", "{50AAB97D-B0D3-4CDF-AA67-C67520EE26B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8423278F-83BC-4AA9-BAD8-3AF8A5258BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8423278F-83BC-4AA9-BAD8-3AF8A5258BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8423278F-83BC-4AA9-BAD8-3AF8A5258BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50AAB97D-B0D3-4CDF-AA67-C67520EE26B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50AAB97D-B0D3-4CDF-AA67-C67520EE26B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50AAB97D-B0D3-4CDF-AA67-C67520EE26B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50AAB97D-B0D3-4CDF-AA67-C67520EE26B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
