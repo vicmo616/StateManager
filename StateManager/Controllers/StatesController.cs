@@ -8,22 +8,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DbLibrary;
 using StateManagerModels;
+using StateDataService;
 
 namespace StateManager.Controllers
 {
     public class StatesController : Controller
     {
-        private readonly StateDbContext _context;
-
-        public StatesController(StateDbContext context)
+        private readonly IStatesService _service;
+        public StatesController(IStatesService service)
         {
-            _context = context;
+            _service = service;
         }
 
         // GET: States
         public async Task<IActionResult> Index()
         {
-            return View(await _context.States.ToListAsync());
+            return View(await _service.GetAllAsync());
         }
 
         // GET: States/Details/5
@@ -34,8 +34,7 @@ namespace StateManager.Controllers
                 return NotFound();
             }
 
-            var state = await _context.States
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var state = await _service.GetAsync((int)id);
             if (state == null)
             {
                 return NotFound();
@@ -59,8 +58,7 @@ namespace StateManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(state);
-                await _context.SaveChangesAsync();
+                await _service.AddOrUpdateAsync(state);
                 return RedirectToAction(nameof(Index));
             }
             return View(state);
@@ -74,7 +72,7 @@ namespace StateManager.Controllers
                 return NotFound();
             }
 
-            var state = await _context.States.FindAsync(id);
+            var state = await _service.GetAsync((int)id);
             if (state == null)
             {
                 return NotFound();
@@ -98,18 +96,18 @@ namespace StateManager.Controllers
             {
                 try
                 {
-                    _context.Update(state);
-                    await _context.SaveChangesAsync();
+                    await _service.AddOrUpdateAsync(state);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!StateExists(state.Id))
+                    var existingState = await StateExists(state.Id);
+                    if (existingState == null)
                     {
-                        return NotFound();
+                    return NotFound();
                     }
                     else
                     {
-                        throw;
+                    throw;
                     }
                 }
                 return RedirectToAction(nameof(Index));
@@ -124,9 +122,7 @@ namespace StateManager.Controllers
             {
                 return NotFound();
             }
-
-            var state = await _context.States
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var state = await _service.GetAsync((int)id);
             if (state == null)
             {
                 return NotFound();
@@ -140,15 +136,13 @@ namespace StateManager.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var state = await _context.States.FindAsync(id);
-            _context.States.Remove(state);
-            await _context.SaveChangesAsync();
+            await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool StateExists(int id)
+        private async Task<bool> StateExists(int id)
         {
-            return _context.States.Any(e => e.Id == id);
+            return await _service.ExistsAsync(id);
         }
     }
 }
