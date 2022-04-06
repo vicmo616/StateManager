@@ -25,7 +25,7 @@ namespace DbLibrary
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
                 _configuration = builder.Build();
-                var cnstr = _configuration.GetConnectionString("MyContactManager");
+                var cnstr = _configuration.GetConnectionString("DefaultConnection");
                 optionsBuilder.UseSqlServer(cnstr);
             }
         }
