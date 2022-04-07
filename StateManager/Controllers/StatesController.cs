@@ -9,9 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using DbLibrary;
 using StateManagerModels;
 using StateDataService;
+using Microsoft.AspNetCore.Authorization;
+using StateManager.Data;
 
 namespace StateManager.Controllers
 {
+    [Authorize]
     public class StatesController : Controller
     {
         private readonly IStatesService _service;
@@ -44,6 +47,7 @@ namespace StateManager.Controllers
         }
 
         // GET: States/Create
+        [Authorize(Roles = UserRolesService.ADMIN_ROLE_NAME)]
         public IActionResult Create()
         {
             return View();
@@ -54,6 +58,7 @@ namespace StateManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(UserRolesService.ADMIN_ROLE_NAME)]
         public async Task<IActionResult> Create([Bind("Id,Name,Abbreviation")] State state)
         {
             if (ModelState.IsValid)
@@ -65,6 +70,7 @@ namespace StateManager.Controllers
         }
 
         // GET: States/Edit/5
+        [Authorize(Roles = UserRolesService.ADMIN_ROLE_NAME)]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,6 +91,7 @@ namespace StateManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRolesService.ADMIN_ROLE_NAME)]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Abbreviation")] State state)
         {
             if (id != state.Id)
@@ -116,6 +123,7 @@ namespace StateManager.Controllers
         }
 
         // GET: States/Delete/5
+        [Authorize(Roles = UserRolesService.ADMIN_ROLE_NAME)]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,6 +142,7 @@ namespace StateManager.Controllers
         // POST: States/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = UserRolesService.ADMIN_ROLE_NAME)]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _service.DeleteAsync(id);
