@@ -15,7 +15,7 @@ namespace StateDataService
         {
             if (state.Id == 0)
             {
-            return await AddOrUpdateAsync(state);
+            return await AddAsync(state);
             }
             else
             {
