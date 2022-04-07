@@ -11,22 +11,32 @@ using StateManagerModels;
 using StateDataService;
 using Microsoft.AspNetCore.Authorization;
 using StateManager.Data;
+using Microsoft.Extensions.Caching.Memory;
+using StateManager.Models;
 
 namespace StateManager.Controllers
 {
     [Authorize]
     public class StatesController : Controller
     {
+        private readonly IMemoryCache _memoryCache;  
         private readonly IStatesService _service;
-        public StatesController(IStatesService service)
+        public StatesController(IStatesService service, IMemoryCache memorycache)
         {
             _service = service;
+            _memoryCache = memorycache;
         }
 
         // GET: States
         public async Task<IActionResult> Index()
         {
-            return View(await _service.GetAllAsync());
+            var statesdata = new List<State>();
+            if (!_memoryCache.TryGetValue(StateManagerConstants.AllStatesCache, out statesdata))
+            {
+                statesdata = await _service.GetAllAsync() as List<State>;
+                _memoryCache.Set(StateManagerConstants.AllStatesCache, statesdata, TimeSpan.FromDays(1));
+            }
+            return View(statesdata);
         }
 
         // GET: States/Details/5
@@ -64,6 +74,7 @@ namespace StateManager.Controllers
             if (ModelState.IsValid)
             {
                 await _service.AddOrUpdateAsync(state);
+                _memoryCache.Remove(StateManagerConstants.AllStatesCache);
                 return RedirectToAction(nameof(Index));
             }
             return View(state);
@@ -104,6 +115,7 @@ namespace StateManager.Controllers
                 try
                 {
                     await _service.AddOrUpdateAsync(state);
+                    _memoryCache.Remove(StateManagerConstants.AllStatesCache);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -146,6 +158,7 @@ namespace StateManager.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _service.DeleteAsync(id);
+            _memoryCache.Remove(StateManagerConstants.AllStatesCache);
             return RedirectToAction(nameof(Index));
         }
 
