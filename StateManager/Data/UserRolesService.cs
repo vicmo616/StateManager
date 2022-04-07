@@ -5,8 +5,8 @@ namespace StateManager.Data
     public class UserRolesService : IUserRolesService
     {
         public const string ADMIN_ROLE_NAME = "Admin";
-        public const string ADMIN_USER_EMAIL = "email@email.com";
-        public const string ADMIN_USER_PWD = "P@ssw@rd";
+        public const string ADMIN_USER_EMAIL = "bob@bob.com";
+        public const string ADMIN_USER_PWD = "P@ssW0rd1";
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         public UserRolesService(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
