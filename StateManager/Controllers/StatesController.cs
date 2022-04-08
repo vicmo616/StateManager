@@ -68,7 +68,7 @@ namespace StateManager.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(UserRolesService.ADMIN_ROLE_NAME)]
+        [Authorize(Roles = UserRolesService.ADMIN_ROLE_NAME)]
         public async Task<IActionResult> Create([Bind("Id,Name,Abbreviation")] State state)
         {
             if (ModelState.IsValid)
