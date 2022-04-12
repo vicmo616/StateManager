@@ -33,4 +33,4 @@ jobs:
       with:
         app-name: 'StateManager220411VMO'
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-        package: './myapp'
+        package: './StateManager/myapp'
