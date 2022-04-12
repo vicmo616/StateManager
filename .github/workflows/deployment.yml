@@ -31,6 +31,6 @@ jobs:
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'tbd'
+        app-name: 'StateManager220411VMO'
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
         package: './myapp'
